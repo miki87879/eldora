@@ -1,0 +1,56 @@
+/* =================================
+   CHECKOUT PAGE
+================================= */
+
+body {
+    background-color: #f7f5f3;
+}
+
+
+.checkout-container {
+    max-width: 1100px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+
+.checkout-title {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+.checkout-card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+.checkout-card .form-control {
+    border-radius: 10px;
+    padding: 11px;
+}
+
+
+.checkout-card .form-control:focus {
+    box-shadow: none;
+    border-color: #333;
+}
+
+
+.order-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+#payButton {
+    border-radius: 10px;
+    font-size: 17px;
+}
+
+
+#successMessage {
+    border-radius: 12px;
+}
