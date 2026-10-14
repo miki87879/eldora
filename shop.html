@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container py-4">
+
+        <h1 class="text-center mb-4">Our Jewelry</h1>
+
+        <!-- Messages for the user -->
+        <div id="message-container"></div>
+
+        <!-- Category buttons -->
+        <div id="category-filter" class="text-center mb-4">
+            <button class="btn btn-outline-dark" data-category="all">All</button>
+            <button class="btn btn-outline-dark" data-category="Rings">Rings</button>
+            <button class="btn btn-outline-dark" data-category="Necklaces">Necklaces</button>
+            <button class="btn btn-outline-dark" data-category="Bracelets">Bracelets</button>
+            <button class="btn btn-outline-dark" data-category="Earrings">Earrings</button>
+        </div>
+
+        <!-- Products -->
+        <div id="products-container" class="row"></div>
+
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="shop.js"></script>
+
+</body>
+
+</html>

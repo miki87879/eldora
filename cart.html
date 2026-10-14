@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>עגלת קניות | Jewelry Shop</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- קובץ העיצוב שלנו -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- תפריט עליון -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="shop.html">
+                JEWELRY SHOP
+            </a>
+        </div>
+    </nav>
+
+    <main class="container cart-page py-4">
+
+        <h1 class="cart-title text-center mb-4">עגלת הקניות</h1>
+
+        <!-- הודעות למשתמש (למשל: אין מספיק במלאי) -->
+        <div id="cart-message"></div>
+
+        <!-- JS מכניס לכאן את המוצרים שבעגלה -->
+        <div id="cart-items"></div>
+
+        <hr>
+
+        <div class="cart-summary d-flex justify-content-between align-items-center">
+            <span class="fs-5">סה"כ לתשלום:</span>
+            <strong id="cart-total" class="fs-4">0 ₪</strong>
+        </div>
+
+        <div class="cart-actions mt-4 d-flex gap-2">
+            <button id="clear-cart" type="button" class="btn btn-outline-danger">
+                ריקון העגלה
+            </button>
+            <a href="shop.html" class="btn btn-outline-dark">המשך קניות</a>
+            <a id="checkout-link" href="checkout.html" class="btn btn-dark">
+                מעבר לתשלום
+            </a>
+        </div>
+
+    </main>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+
+</body>
+
+</html>
