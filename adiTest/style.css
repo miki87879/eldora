@@ -1,0 +1,14 @@
+/* style.css - עיצוב עמוד הכניסה */
+
+.login-page {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+}
+
+.login-page .card {
+    border-radius: 1rem;
+}
+
+.login-page h1 {
+    color: #4e73df;
+    font-weight: bold;
+}
