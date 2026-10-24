@@ -86,9 +86,9 @@ function connectLogoutButtons() {
     }
 }
 
+// עמוד הכניסה מסומן ב-<html data-page="login"> (כך זה עובד גם כשהכתובת לא נגמרת ב-index.html)
 function isLoginPage() {
-    const page = window.location.pathname.split("/").pop();
-    return page === "" || page === LOGIN_PAGE;
+    return document.documentElement.dataset.page === "login";
 }
 
 // בעמודים הפנימיים: אם אין משתמש מחובר - חוזרים לעמוד הכניסה

@@ -38,7 +38,7 @@ function updateCartBadge() {
 
 
 function renderHeader() {
-    const isLoginPage = currentPage === "index.html";
+    const isLogin = isLoginPage(); // user.js
 
     // פס הודעה עליון
     const announcement = document.createElement("div");
@@ -51,7 +51,7 @@ function renderHeader() {
     }).join("");
 
     // בעמוד הכניסה מציגים רק את שם החנות ואת כפתור מצב כהה
-    const userArea = isLoginPage ? "" : `
+    const userArea = isLogin ? "" : `
         <div class="dropdown">
             <button class="user-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ${t("hello")} <span class="user-first"></span><span class="user-rest"></span>
@@ -68,10 +68,10 @@ function renderHeader() {
     header.className = "site-header";
     header.innerHTML = `
         <div class="container">
-            <a class="wordmark" href="${isLoginPage ? "index.html" : "shop.html"}">
+            <a class="wordmark" href="${isLogin ? "index.html" : "shop.html"}">
                 <img class="logo-mark" src="images/logo.svg" alt="">${STORE_NAME}
             </a>
-            ${isLoginPage ? "" : `<nav class="header-nav">${links}</nav>`}
+            ${isLogin ? "" : `<nav class="header-nav">${links}</nav>`}
             <div class="header-actions">
                 ${userArea}
                 <button id="langToggle" class="lang-toggle" type="button" lang="${LANG === "he" ? "en" : "he"}" aria-label="${t("lang_switch")}" title="${t("lang_switch")}">
