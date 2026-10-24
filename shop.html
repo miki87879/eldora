@@ -1,40 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Shop</title>
+    <title data-i18n="title_shop">החנות | Eldora</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+
+    <!-- גופנים, Bootstrap ואייקונים - שמורים בתיקייה vendor כדי שהאתר יעבוד גם בלי אינטרנט -->
+    <!-- i18n.js מחליף לגרסה של Bootstrap משמאל לימין כשנבחרה אנגלית -->
+    <link rel="stylesheet" href="vendor/fonts/fonts.css">
+    <link rel="stylesheet" id="bootstrap-css" href="vendor/bootstrap/bootstrap.rtl.min.css">
+    <script src="js/i18n.js"></script>
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+
+    <!-- קובץ העיצוב שלנו - תמיד אחרון -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/user.js"></script>
 </head>
 
 <body>
 
-    <div class="container py-4">
+    <main class="container pb-4">
 
-        <h1 class="text-center mb-4">Our Jewelry</h1>
+        <!-- פתיחה -->
+        <section class="shop-intro">
+            <div>
+                <span class="small-caps"><span data-i18n="intro_hello">שלום</span> <span class="user-name"></span></span>
+                <h1 data-i18n-html="intro_title">הזהב שלך.<br>הסיפור שלך.</h1>
+                <p data-i18n="intro_text">תכשיטים בזהב, כסף ופנינים שנבחרו אחד-אחד – לרגעים הקטנים של כל יום, ולאלה שזוכרים לתמיד.</p>
+            </div>
+            <div class="shop-intro-img">
+                <img src="images/bangle-bracelet.jpg" alt="צמיד זהב קשיח" data-i18n-alt="intro_img_alt">
+            </div>
+        </section>
 
-        <!-- Messages for the user -->
-        <div id="message-container"></div>
+        <!-- קטגוריות, חיפוש ומיון -->
+        <div class="toolbar">
+            <div id="category-filter" class="category-tabs" role="group" aria-label="סינון לפי קטגוריה" data-i18n-aria="filter_aria">
+                <button class="category-tab active" data-category="all" data-i18n="cat_all">הכל</button>
+                <button class="category-tab" data-category="Rings" data-i18n="cat_Rings">טבעות</button>
+                <button class="category-tab" data-category="Necklaces" data-i18n="cat_Necklaces">שרשראות</button>
+                <button class="category-tab" data-category="Bracelets" data-i18n="cat_Bracelets">צמידים</button>
+                <button class="category-tab" data-category="Earrings" data-i18n="cat_Earrings">עגילים</button>
+            </div>
 
-        <!-- Category buttons -->
-        <div id="category-filter" class="text-center mb-4">
-            <button class="btn btn-outline-dark" data-category="all">All</button>
-            <button class="btn btn-outline-dark" data-category="Rings">Rings</button>
-            <button class="btn btn-outline-dark" data-category="Necklaces">Necklaces</button>
-            <button class="btn btn-outline-dark" data-category="Bracelets">Bracelets</button>
-            <button class="btn btn-outline-dark" data-category="Earrings">Earrings</button>
+            <div class="toolbar-controls">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="search" id="search-input" class="form-control" placeholder="חיפוש" data-i18n-placeholder="search_placeholder"
+                           aria-label="חיפוש מוצר" data-i18n-aria="search_aria" autocomplete="off">
+                    <button type="button" id="search-clear" class="search-clear d-none" aria-label="ניקוי החיפוש" data-i18n-aria="search_clear">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+
+                <select id="sort-select" class="form-select sort-select" aria-label="מיון המוצרים" data-i18n-aria="sort_aria">
+                    <option value="default" data-i18n="sort_default">מומלצים</option>
+                    <option value="price-asc" data-i18n="sort_price_asc">מחיר: מהנמוך לגבוה</option>
+                    <option value="price-desc" data-i18n="sort_price_desc">מחיר: מהגבוה לנמוך</option>
+                    <option value="name" data-i18n="sort_name">שם: א-ת</option>
+                </select>
+            </div>
         </div>
 
-        <!-- Products -->
-        <div id="products-container" class="row"></div>
+        <p id="results-count" class="results-count" aria-live="polite"></p>
 
-    </div>
+        <!-- המוצרים -->
+        <div id="products-container" class="row row-cols-2 row-cols-md-3 row-cols-xl-4 gx-3 gx-md-4 gy-5"></div>
 
+        <!-- מוצג כשהחיפוש לא מצא כלום -->
+        <div id="no-results" class="empty-state d-none">
+            <h3 data-i18n="no_results_title">לא מצאנו תכשיטים שמתאימים לחיפוש</h3>
+            <p data-i18n="no_results_text">נסו מילה אחרת או בחרו קטגוריה אחרת</p>
+            <button type="button" id="reset-filters" class="btn btn-dark" data-i18n="show_all">הצגת כל התכשיטים</button>
+        </div>
+
+    </main>
+
+    <script src="js/ui.js"></script>
+    <script src="js/layout.js"></script>
     <script src="js/products.js"></script>
-    <script src="shop.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/search.js"></script>
 
 </body>
 

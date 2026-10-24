@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#b08d57" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+  <!-- הסמל של ELDORA: טבעת דקה עם יהלום, בקווי זהב -->
+  <circle cx="32" cy="41" r="16"/>
+  <path d="M23.5 16.5 L27.5 10.5 H36.5 L40.5 16.5 L32 25.5 Z"/>
+  <path d="M23.5 16.5 H40.5 M27.5 10.5 L30 16.5 L32 25.5 L34 16.5 L36.5 10.5" stroke-width="1.2"/>
+</svg>

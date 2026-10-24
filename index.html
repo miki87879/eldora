@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title_login">כניסה | Eldora</title>
+
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+
+    <!-- גופנים, Bootstrap ואייקונים - שמורים בתיקייה vendor כדי שהאתר יעבוד גם בלי אינטרנט -->
+    <!-- i18n.js מחליף לגרסה של Bootstrap משמאל לימין כשנבחרה אנגלית -->
+    <link rel="stylesheet" href="vendor/fonts/fonts.css">
+    <link rel="stylesheet" id="bootstrap-css" href="vendor/bootstrap/bootstrap.rtl.min.css">
+    <script src="js/i18n.js"></script>
+    <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+
+    <!-- קובץ העיצוב שלנו - תמיד אחרון -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/user.js"></script>
+</head>
+<body class="login-page">
+
+    <main class="login-layout">
+
+        <div class="login-panel">
+            <div class="login-form">
+
+                <!-- בחירת שפה -->
+                <div class="lang-choice" role="group" aria-label="Language / שפה">
+                    <button type="button" class="lang-option" data-lang="he">עברית</button>
+                    <button type="button" class="lang-option" data-lang="en">English</button>
+                </div>
+
+                <!-- טופס כניסה - מוצג כשאין משתמש שמור -->
+                <div id="loginSection">
+                    <h1 data-i18n="login_title">ברוכים הבאים</h1>
+                    <p class="text-muted-soft mb-4" data-i18n="login_sub">כדי להתחיל לקנות, הכניסו את שמכם המלא.</p>
+
+                    <form id="loginForm" novalidate>
+                        <div class="mb-4">
+                            <label for="fullName" class="form-label" data-i18n="full_name">שם מלא</label>
+                            <input type="text" id="fullName" class="form-control"
+                                   placeholder="לדוגמה: ישראל ישראלי" data-i18n-placeholder="name_placeholder" maxlength="40" autocomplete="name">
+                            <div class="invalid-feedback" id="nameError"></div>
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-dark" data-i18n="enter_shop">כניסה לחנות</button>
+                            <button type="reset" class="link-action" data-i18n="clear">ניקוי</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- מוצג כשהמשתמש כבר נכנס בעבר -->
+                <div id="welcomeSection" class="d-none">
+                    <h1><span data-i18n="hello">שלום,</span> <span class="user-name"></span></h1>
+                    <p class="text-muted-soft mb-4" data-i18n="welcome_back_sub">טוב לראות אותך שוב.</p>
+
+                    <div class="d-grid gap-3">
+                        <a href="shop.html" class="btn btn-dark" data-i18n="continue_shop">המשך לחנות</a>
+                        <button type="button" class="link-action logout-btn" data-i18n="not_me">לא אני – החלפת משתמש</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="login-image">
+            <img src="images/pearl-necklace.jpg" alt="שרשרת פנינים" data-i18n-alt="login_img_alt">
+        </div>
+
+    </main>
+
+    <script src="js/ui.js"></script>
+    <script src="js/layout.js"></script>
+</body>
+</html>
