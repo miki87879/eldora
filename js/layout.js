@@ -129,7 +129,10 @@ function renderFooter() {
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">© ${new Date().getFullYear()} ${STORE_NAME} · ${t("footer_course")}</div>
+            <div class="footer-bottom">
+                <div>© ${new Date().getFullYear()} ${STORE_NAME} · ${t("footer_course")}</div>
+                <div class="footer-team">${t("footer_team")}</div>
+            </div>
         </div>`;
     document.body.append(footer);
 }

@@ -1046,6 +1046,12 @@ a {
   font-size: .82rem;
 }
 
+.footer-team {
+  margin-top: .35rem;
+  font-size: .75rem;
+  opacity: .85;
+}
+
 /* ---------- 15. נגישות ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
