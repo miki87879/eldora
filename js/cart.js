@@ -1,25 +1,28 @@
 // ==========================================
 // CART PAGE
-// הסל נשמר ב-localStorage תחת המפתח "cart"
+// הסל נשמר ב-localStorage תחת המפתח "cart:<שם המשתמש>" (getUserKey ב-user.js)
 // בפורמט: [{ id: מספר, quantity: מספר }]
 // ==========================================
 
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalElement = document.getElementById("cart-total");
 const cartCountElement = document.getElementById("cart-count");
+const cartSubtotalElement = document.getElementById("cart-subtotal");
+const cartShippingElement = document.getElementById("cart-shipping");
+const freeShippingNote = document.getElementById("free-shipping-note");
 const clearCartButton = document.getElementById("clear-cart");
 const checkoutLink = document.getElementById("checkout-link");
 
 
 // קריאת הסל מה-localStorage (אם אין - מחזירים סל ריק)
 function getCart() {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    return JSON.parse(localStorage.getItem(getUserKey("cart"))) || [];
 }
 
 
 // שמירת הסל ב-localStorage
 function saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(getUserKey("cart"), JSON.stringify(cart));
     updateCartBadge(); // המונה בתפריט העליון (layout.js)
 }
 
@@ -88,8 +91,21 @@ function renderCart() {
             </div>`;
     }
 
-    cartTotalElement.textContent = formatPrice(total);
+    // משלוח: חינם מעל ₪200 (getShippingPrice ב-products.js)
+    const shipping = getShippingPrice(total);
+    cartSubtotalElement.textContent = formatPrice(total);
+    cartShippingElement.textContent = shipping === 0 ? t("free") : formatPrice(shipping);
+    cartTotalElement.textContent = formatPrice(total + shipping);
     cartCountElement.textContent = itemsCount;
+
+    // כמה חסר למשלוח חינם
+    if (shownItems === 0) {
+        freeShippingNote.textContent = "";
+    } else if (shipping > 0) {
+        freeShippingNote.textContent = t("free_shipping_left", { price: formatPrice(FREE_SHIPPING_FROM - total) });
+    } else {
+        freeShippingNote.textContent = t("free_shipping_reached");
+    }
     clearCartButton.classList.toggle("d-none", shownItems === 0);
 
     // כשהסל ריק אי אפשר לעבור לתשלום

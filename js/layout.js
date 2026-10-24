@@ -14,7 +14,7 @@ const currentPage = location.pathname.split("/").pop() || "index.html";
 
 // סופר כמה פריטים יש בסל (הסל שמור בפורמט [{ id, quantity }])
 function getCartCount() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem(getUserKey("cart"))) || [];
     let count = 0;
 
     cart.forEach(function (item) {
@@ -172,7 +172,7 @@ showWelcomeToast();
 
 // עדכון המספר גם כשהסל משתנה בלשונית אחרת
 window.addEventListener("storage", event => {
-    if (event.key === "cart") {
+    if (event.key === getUserKey("cart")) {
         updateCartBadge();
     }
 });

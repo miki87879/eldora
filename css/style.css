@@ -803,6 +803,16 @@ a {
   font-size: .95rem;
 }
 
+.shipping-note {
+  margin: .35rem 0 0;
+  font-size: .85rem;
+  color: var(--accent);
+}
+
+.shipping-note:empty {
+  display: none;
+}
+
 .summary-total {
   display: flex;
   justify-content: space-between;

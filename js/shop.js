@@ -101,7 +101,7 @@ function addToCart(productId, amount = 1) {
 
     // לוקחים את העגלה שכבר שמורה
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(localStorage.getItem(getUserKey("cart"))) || [];
 
 
     // בודקים אם המוצר כבר נמצא בעגלה
@@ -146,7 +146,7 @@ function addToCart(productId, amount = 1) {
 
     // שומרים את העגלה
     localStorage.setItem(
-        "cart",
+        getUserKey("cart"),
         JSON.stringify(cart)
     );
 
@@ -160,7 +160,7 @@ function addToCart(productId, amount = 1) {
 
 // כמה יחידות עוד אפשר להוסיף לסל (המלאי פחות מה שכבר בסל)
 function getAvailableToAdd(product) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem(getUserKey("cart"))) || [];
     const itemInCart = cart.find(function (item) {
         return item.id === product.id;
     });

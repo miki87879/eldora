@@ -18,6 +18,8 @@ const payButton = document.getElementById("payButton");
 
 const orderSummary = document.getElementById("orderSummary");
 const totalPriceElement = document.getElementById("totalPrice");
+const subtotalPriceElement = document.getElementById("subtotalPrice");
+const shippingPriceElement = document.getElementById("shippingPrice");
 
 
 // ==========================================
@@ -38,7 +40,7 @@ if (userName) {
 
 // הסל נשמר בפורמט [{ id, quantity }] - את השם והמחיר לוקחים מ-products.js
 function getOrderItems() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem(getUserKey("cart"))) || [];
     const items = [];
 
     cart.forEach(function (cartItem) {
@@ -102,9 +104,14 @@ function displayOrder() {
     });
 
     // מציגים את המחיר הכולל
-    totalPriceElement.textContent = formatPrice(total);
+    // משלוח: חינם מעל ₪200 (getShippingPrice ב-products.js)
+    const shipping = getShippingPrice(total);
+    subtotalPriceElement.textContent = formatPrice(total);
+    shippingPriceElement.textContent = shipping === 0 ? t("free") : formatPrice(shipping);
+    totalPriceElement.textContent = formatPrice(total + shipping);
 
-    return total;
+    // מחזירים את הסכום לתשלום, כולל משלוח
+    return total + shipping;
 }
 
 
@@ -262,7 +269,7 @@ checkoutForm.addEventListener("submit", function (event) {
         });
 
         // מרוקנים את העגלה
-        localStorage.removeItem("cart");
+        localStorage.removeItem(getUserKey("cart"));
         updateCartBadge();
 
         setButtonLoading(payButton, false);
@@ -283,10 +290,10 @@ checkoutForm.addEventListener("submit", function (event) {
 });
 
 
-// שמירת הזמנה ב-localStorage תחת המפתח "orders"
+// שמירת הזמנה ב-localStorage תחת המפתח "orders:<שם המשתמש>"
 // שומרים גם את המחיר ששולם, כדי שההיסטוריה לא תשתנה אם המחיר יתעדכן
 function saveOrder(orderNumber, items, total) {
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const orders = JSON.parse(localStorage.getItem(getUserKey("orders"))) || [];
     const orderItems = [];
 
     items.forEach(function (item) {
@@ -304,5 +311,5 @@ function saveOrder(orderNumber, items, total) {
         total: total
     });
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+    localStorage.setItem(getUserKey("orders"), JSON.stringify(orders));
 }

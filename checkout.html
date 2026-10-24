@@ -29,7 +29,7 @@
     <main class="container checkout-container py-5">
 
         <h1 class="page-title" data-i18n="checkout_title">סיום הזמנה</h1>
-        <p class="page-subtitle" data-i18n="checkout_sub">עוד רגע והתכשיטים בדרך אלייך</p>
+        <p class="page-subtitle" data-i18n="checkout_sub">עוד רגע והתכשיטים יוצאים לדרך</p>
 
 
         <!-- מוצג כשהסל ריק -->
@@ -59,7 +59,7 @@
                             <!-- שם מלא -->
                             <div class="mb-3">
                                 <label for="fullName" class="form-label" data-i18n="full_name">שם מלא</label>
-                                <input type="text" id="fullName" class="form-control" placeholder="הכניסי שם מלא" data-i18n-placeholder="checkout_name_placeholder"
+                                <input type="text" id="fullName" class="form-control" placeholder="שם פרטי ושם משפחה" data-i18n-placeholder="checkout_name_placeholder"
                                        autocomplete="name" required>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -148,8 +148,12 @@
                         <div id="orderSummary"></div>
 
                         <div class="summary-row mt-2">
+                            <span data-i18n="subtotal">סכום ביניים</span>
+                            <span id="subtotalPrice">0 ₪</span>
+                        </div>
+                        <div class="summary-row">
                             <span data-i18n="shipping">משלוח</span>
-                            <span data-i18n="free">חינם</span>
+                            <span id="shippingPrice">0 ₪</span>
                         </div>
 
                         <div class="summary-total">

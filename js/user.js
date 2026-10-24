@@ -17,6 +17,12 @@ function getUserName() {
     return localStorage.getItem(USER_KEY);
 }
 
+// הסל וההזמנות נשמרים בנפרד לכל משתמש, למשל "cart:נועה כהן" ו-"orders:נועה כהן"
+// כך מי שנכנסת אחרי מישהי אחרת באותו מחשב לא רואה את הסל וההזמנות שלה
+function getUserKey(name) {
+    return name + ":" + getUserName();
+}
+
 function isLoggedIn() {
     return getUserName() != null;
 }

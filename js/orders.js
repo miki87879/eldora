@@ -1,5 +1,5 @@
 // orders.js - עמוד "ההזמנות שלי"
-// ההזמנות נשמרות ב-localStorage תחת המפתח "orders" (checkout.js שומר אותן אחרי תשלום)
+// ההזמנות נשמרות ב-localStorage תחת המפתח "orders:<שם המשתמש>" (checkout.js שומר אותן אחרי תשלום)
 // בפורמט: [{ number, date, items: [{ id, quantity, price }], total }]
 
 const ordersList = document.getElementById("orders-list");
@@ -7,7 +7,7 @@ const ordersSummary = document.getElementById("orders-summary");
 
 
 function getOrders() {
-    return JSON.parse(localStorage.getItem("orders")) || [];
+    return JSON.parse(localStorage.getItem(getUserKey("orders"))) || [];
 }
 
 
@@ -74,10 +74,23 @@ function renderOrders() {
         let itemsCount = 0;
         let itemsHtml = "";
 
+        let itemsTotal = 0;
+
         order.items.forEach(function (item) {
             itemsCount += item.quantity;
+            itemsTotal += item.price * item.quantity;
             itemsHtml += createOrderItemHtml(item);
         });
+
+        // אם שולם משלוח - מציגים אותו כשורה נפרדת
+        const shipping = order.total - itemsTotal;
+        if (shipping > 0) {
+            itemsHtml += `
+                <div class="order-item order-shipping">
+                    <span class="flex-grow-1 text-muted-soft">${t("shipping")}</span>
+                    <span>${formatPrice(shipping)}</span>
+                </div>`;
+        }
 
         const orderElement = document.createElement("section");
         orderElement.className = "order-card";

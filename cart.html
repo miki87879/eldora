@@ -29,7 +29,7 @@
     <main class="container cart-page py-5">
 
         <h1 class="page-title" data-i18n="cart_title">סל הקניות</h1>
-        <p class="page-subtitle"><span class="user-name"></span><span data-i18n="cart_sub">, אלה התכשיטים שבחרת</span></p>
+        <p class="page-subtitle"><span class="user-name"></span><span data-i18n="cart_sub">, אלה התכשיטים שבסל שלך</span></p>
 
         <div class="row g-4 g-lg-5">
 
@@ -49,9 +49,14 @@
                         <span id="cart-count">0</span>
                     </div>
                     <div class="summary-row">
-                        <span data-i18n="shipping">משלוח</span>
-                        <span data-i18n="free">חינם</span>
+                        <span data-i18n="subtotal">סכום ביניים</span>
+                        <span id="cart-subtotal">0 ₪</span>
                     </div>
+                    <div class="summary-row">
+                        <span data-i18n="shipping">משלוח</span>
+                        <span id="cart-shipping">0 ₪</span>
+                    </div>
+                    <p id="free-shipping-note" class="shipping-note"></p>
 
                     <div class="summary-total">
                         <span data-i18n="total">סה"כ</span>

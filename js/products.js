@@ -134,6 +134,19 @@ const products = [
 
 ];
 
+// ---------- משלוח ----------
+// משלוח חינם מעל ₪200, ומתחת לזה ₪25 (כמו שכתוב בפס העליון של האתר)
+const FREE_SHIPPING_FROM = 200;
+const SHIPPING_PRICE = 25;
+
+function getShippingPrice(subtotal) {
+    if (subtotal === 0 || subtotal >= FREE_SHIPPING_FROM) {
+        return 0;
+    }
+    return SHIPPING_PRICE;
+}
+
+
 // השם והתיאור בשפה שנבחרה (i18n.js)
 function getProductName(product) {
     return LANG === "en" ? product.nameEn : product.name;
