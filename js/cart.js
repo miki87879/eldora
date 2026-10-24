@@ -6,7 +6,7 @@
 
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalElement = document.getElementById("cart-total");
-const cartMessage = document.getElementById("cart-message");
+const cartCountElement = document.getElementById("cart-count");
 const clearCartButton = document.getElementById("clear-cart");
 const checkoutLink = document.getElementById("checkout-link");
 
@@ -20,17 +20,7 @@ function getCart() {
 // שמירת הסל ב-localStorage
 function saveCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-
-// הצגת הודעה קצרה למשתמש
-function showCartMessage(text) {
-    cartMessage.innerHTML = `<div class="alert alert-warning">${text}</div>`;
-
-    // ההודעה נעלמת אחרי 3 שניות
-    setTimeout(function () {
-        cartMessage.innerHTML = "";
-    }, 3000);
+    updateCartBadge(); // המונה בתפריט העליון (layout.js)
 }
 
 
@@ -41,6 +31,7 @@ function renderCart() {
     cartItemsContainer.innerHTML = "";
     let total = 0;
     let shownItems = 0;
+    let itemsCount = 0;
 
     cart.forEach(function (item) {
         // מחפשים את פרטי המוצר לפי ה-id
@@ -55,28 +46,33 @@ function renderCart() {
         const subtotal = product.price * item.quantity;
         total += subtotal;
         shownItems++;
+        itemsCount += item.quantity;
 
         const row = document.createElement("div");
-        row.className = "cart-item d-flex align-items-center gap-3 py-3 border-bottom";
+        row.className = "cart-item";
 
         row.innerHTML = `
-            <img class="cart-item-image" src="${product.image}" alt="${product.name}"
-                 width="80" height="80" style="object-fit: contain;">
+            <img class="cart-item-image" src="${product.image}" alt="${getProductName(product)}">
 
-            <div class="cart-item-info flex-grow-1">
-                <strong class="cart-item-name">${product.name}</strong>
-                <div class="cart-item-price text-secondary">${product.price} ₪ ליחידה</div>
+            <div class="cart-item-info">
+                <strong class="cart-item-name">${getProductName(product)}</strong>
+                <div class="text-muted-soft small mt-1">${getCategoryName(product.category)} · ${t("sku")} ${product.id}</div>
+                <div class="text-muted-soft small">${t("per_unit", { price: formatPrice(product.price) })}</div>
             </div>
 
-            <div class="cart-item-quantity d-flex align-items-center gap-2">
-                <button type="button" class="btn btn-outline-dark btn-sm" data-action="minus" data-id="${item.id}">-</button>
-                <span class="cart-item-qty">${item.quantity}</span>
-                <button type="button" class="btn btn-outline-dark btn-sm" data-action="plus" data-id="${item.id}">+</button>
+            <div class="cart-item-actions">
+                <div class="qty-control" role="group" aria-label="${t("qty_aria")}">
+                    <button type="button" data-action="minus" data-id="${item.id}" aria-label="${t("qty_minus")}"><i class="bi bi-dash"></i></button>
+                    <span class="cart-item-qty">${item.quantity}</span>
+                    <button type="button" data-action="plus" data-id="${item.id}" aria-label="${t("qty_plus")}"><i class="bi bi-plus"></i></button>
+                </div>
+
+                <div class="cart-item-subtotal">${formatPrice(subtotal)}</div>
+
+                <button type="button" class="btn-remove" data-action="remove" data-id="${item.id}" aria-label="${t("remove_item")}" title="${t("remove_item")}">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
-
-            <div class="cart-item-subtotal fw-bold">${subtotal} ₪</div>
-
-            <button type="button" class="btn btn-outline-danger btn-sm" data-action="remove" data-id="${item.id}">מחיקה</button>
         `;
 
         cartItemsContainer.appendChild(row);
@@ -84,10 +80,17 @@ function renderCart() {
 
     // אם אין מוצרים להצגה - הסל ריק
     if (shownItems === 0) {
-        cartItemsContainer.innerHTML = `<p class="cart-empty text-center text-secondary my-5">הסל ריק</p>`;
+        cartItemsContainer.innerHTML = `
+            <div class="empty-state cart-empty">
+                <h3>${t("empty_cart_title")}</h3>
+                <p>${t("empty_cart_text")}</p>
+                <a href="shop.html" class="btn btn-dark">${t("all_jewelry")}</a>
+            </div>`;
     }
 
-    cartTotalElement.textContent = total + " ₪";
+    cartTotalElement.textContent = formatPrice(total);
+    cartCountElement.textContent = itemsCount;
+    clearCartButton.classList.toggle("d-none", shownItems === 0);
 
     // כשהסל ריק אי אפשר לעבור לתשלום
     if (shownItems === 0) {
@@ -115,7 +118,7 @@ function changeQty(id, delta) {
 
     // הגדלה - רק אם יש מספיק במלאי
     if (delta > 0 && !checkStock(id, newQuantity)) {
-        showCartMessage("אין מספיק במלאי");
+        showToast(t("toast_no_more"), "warning");
         return;
     }
 
@@ -133,19 +136,33 @@ function changeQty(id, delta) {
 
 // מחיקת מוצר מהסל
 function removeItem(id) {
+    const product = getProductById(id);
     const cart = getCart().filter(function (cartItem) {
         return cartItem.id !== id;
     });
 
     saveCart(cart);
     renderCart();
+
+    if (product) {
+        showToast(t("toast_removed", { name: getProductName(product) }), "info");
+    }
 }
 
 
-// ריקון הסל
-clearCartButton.addEventListener("click", function () {
-    saveCart([]);
-    renderCart();
+// ריקון הסל - רק אחרי אישור
+clearCartButton.addEventListener("click", async function () {
+    const confirmed = await showConfirm(t("clear_msg"), {
+        title: t("clear_title"),
+        okText: t("clear_ok"),
+        danger: true
+    });
+
+    if (confirmed) {
+        saveCart([]);
+        renderCart();
+        showToast(t("toast_cleared"), "info");
+    }
 });
 
 
