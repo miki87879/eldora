@@ -1114,7 +1114,7 @@ a {
 .product-modal-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* בחלון רואים את כל התכשיט, בלי חיתוך */
 }
 
 .product-modal-info {
