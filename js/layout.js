@@ -54,7 +54,7 @@ function renderHeader() {
     const userArea = isLogin ? "" : `
         <div class="dropdown">
             <button class="user-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                ${t("hello")} <span class="user-first"></span><span class="user-rest"></span>
+                <span class="user-hello">${t("hello")}</span> <span class="user-first"></span><span class="user-rest"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="cart.html">${t("my_cart")}</a></li>
