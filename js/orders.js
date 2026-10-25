@@ -44,12 +44,23 @@ function createOrderItemHtml(item) {
 }
 
 
+// שורה של משלוח או אריזת מתנה בתוך הזמנה
+function createExtraRowHtml(label, price) {
+    return `
+        <div class="order-item order-extra">
+            <span class="flex-grow-1 text-muted-soft">${label}</span>
+            <span>${formatPrice(price)}</span>
+        </div>`;
+}
+
+
 function renderOrders() {
     const orders = getOrders();
 
     if (orders.length === 0) {
         ordersList.innerHTML = `
             <div class="empty-state">
+                <img class="empty-illustration" src="images/empty-box.svg" alt="">
                 <h3>${t("orders_empty_title")}</h3>
                 <p>${t("orders_empty_text")}</p>
                 <a href="shop.html" class="btn btn-dark">${t("all_jewelry")}</a>
@@ -82,14 +93,14 @@ function renderOrders() {
             itemsHtml += createOrderItemHtml(item);
         });
 
-        // אם שולם משלוח - מציגים אותו כשורה נפרדת
-        const shipping = order.total - itemsTotal;
+        // משלוח ואריזת מתנה, אם שולמו, מוצגים כשורות נפרדות
+        const giftWrap = order.giftWrap || 0;
+        const shipping = order.shipping !== undefined ? order.shipping : order.total - itemsTotal;
         if (shipping > 0) {
-            itemsHtml += `
-                <div class="order-item order-shipping">
-                    <span class="flex-grow-1 text-muted-soft">${t("shipping")}</span>
-                    <span>${formatPrice(shipping)}</span>
-                </div>`;
+            itemsHtml += createExtraRowHtml(t("shipping"), shipping);
+        }
+        if (giftWrap > 0) {
+            itemsHtml += createExtraRowHtml(t("gift_wrap"), giftWrap);
         }
 
         const orderElement = document.createElement("section");

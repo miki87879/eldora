@@ -1,3 +1,5 @@
+// badge = תווית קטנה על המוצר: "new" (חדש), "bestseller" (רב מכר) או "sale" (מבצע)
+// oldPrice = המחיר לפני המבצע, מוצג מחוק ליד המחיר
 const products = [
     {
         id: 1,
@@ -12,6 +14,7 @@ const products = [
     },
     {
         id: 2,
+        badge: "bestseller",
         name: "טבעת כסף",
         nameEn: "Silver Ring",
         price: 99,
@@ -34,6 +37,7 @@ const products = [
     },
     {
         id: 4,
+        badge: "bestseller",
         name: "שרשרת פנינים",
         nameEn: "Pearl Necklace",
         price: 179,
@@ -45,6 +49,7 @@ const products = [
     },
     {
         id: 5,
+        badge: "new",
         name: "טבעת אבן נוצצת",
         nameEn: "Diamond Style Ring",
         price: 199,
@@ -111,6 +116,7 @@ const products = [
     },
     {
         id: 11,
+        badge: "new",
         name: "עגילי קריסטל צמודים",
         nameEn: "Crystal Stud Earrings",
         price: 89,
@@ -122,6 +128,8 @@ const products = [
     },
     {
         id: 12,
+        badge: "sale",
+        oldPrice: 189,
         name: "צמיד זהב קשיח",
         nameEn: "Gold Bangle Bracelet",
         price: 149,
@@ -144,6 +152,23 @@ function getShippingPrice(subtotal) {
         return 0;
     }
     return SHIPPING_PRICE;
+}
+
+
+// ---------- אריזת מתנה ----------
+// נשמרת לכל משתמש בנפרד: { wrap: true/false, message: "ברכה" }
+const GIFT_WRAP_PRICE = 15;
+
+function getGiftOptions() {
+    return JSON.parse(localStorage.getItem(getUserKey("gift"))) || { wrap: false, message: "" };
+}
+
+function saveGiftOptions(options) {
+    localStorage.setItem(getUserKey("gift"), JSON.stringify(options));
+}
+
+function getGiftPrice() {
+    return getGiftOptions().wrap ? GIFT_WRAP_PRICE : 0;
 }
 
 

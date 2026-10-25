@@ -13,12 +13,31 @@ function getStockNote(quantity) {
 }
 
 
+// תווית קטנה על תמונת המוצר (חדש / רב מכר / מבצע)
+function getBadgeHtml(product) {
+    if (!product.badge) {
+        return "";
+    }
+    return `<span class="product-badge badge-${product.badge}">${t("badge_" + product.badge)}</span>`;
+}
+
+
+// המחיר, ואם יש מבצע גם המחיר הקודם מחוק
+function getPriceHtml(product) {
+    let html = `<span class="product-price">${formatPrice(product.price)}</span>`;
+    if (product.oldPrice) {
+        html += ` <del class="product-old-price">${formatPrice(product.oldPrice)}</del>`;
+    }
+    return html;
+}
+
+
 // הצגת המוצרים באתר
 function displayProducts(productsToDisplay) {
 
     productsContainer.innerHTML = "";
 
-    productsToDisplay.forEach(product => {
+    productsToDisplay.forEach((product, index) => {
 
         const isOutOfStock = product.quantity === 0;
         const name = getProductName(product);
@@ -26,6 +45,7 @@ function displayProducts(productsToDisplay) {
         const productCard = document.createElement("div");
 
         productCard.className = "col";
+        productCard.style.setProperty("--i", index); // לסדר הכניסה ההדרגתית (style.css)
 
         productCard.innerHTML = `
             <article class="product-card ${isOutOfStock ? "out-of-stock" : ""}">
@@ -33,6 +53,7 @@ function displayProducts(productsToDisplay) {
                 <button type="button" class="product-img product-open" data-id="${product.id}"
                         aria-label="${t("open_details", { name: name })}">
                     <img src="${product.image}" alt="${name}" loading="lazy">
+                    ${getBadgeHtml(product)}
                 </button>
 
                 <div class="product-meta">
@@ -43,7 +64,7 @@ function displayProducts(productsToDisplay) {
                     <p class="product-desc">${getProductDescription(product)}</p>
 
                     <div class="product-price-row">
-                        <span class="product-price">${formatPrice(product.price)}</span>
+                        <span>${getPriceHtml(product)}</span>
                         ${getStockNote(product.quantity)}
                     </div>
 
@@ -202,7 +223,8 @@ function showProductDetails(productId) {
                         <div class="product-modal-info">
                             <span class="product-category">${getCategoryName(product.category)} · ${t("sku")} ${product.id}</span>
                             <h2 class="modal-title mb-2">${name}</h2>
-                            <p class="product-modal-price">${formatPrice(product.price)}</p>
+                            ${product.badge ? `<p class="mb-2"><span class="product-badge static badge-${product.badge}">${t("badge_" + product.badge)}</span></p>` : ""}
+                            <p class="product-modal-price">${getPriceHtml(product)}</p>
                             <p class="text-muted-soft">${getProductDescription(product)}</p>
                             <p class="mb-4">${getStockNote(product.quantity)}</p>
 

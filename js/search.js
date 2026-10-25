@@ -111,6 +111,19 @@ categoryButtons.forEach(button => {
 
 document.getElementById("reset-filters").addEventListener("click", resetFilters);
 
+// אריחי הקטגוריות בראש העמוד: מסננים וגוללים אל המוצרים
+document.querySelectorAll(".category-tile").forEach(tile => {
+    tile.addEventListener("click", function () {
+        setCategory(tile.dataset.category);
+        document.getElementById("toolbar").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+});
 
-// מציגים את כל המוצרים כשנכנסים לחנות
+
+// מציגים את כל המוצרים כשנכנסים לחנות.
+// רק בפעם הראשונה הכרטיסים נכנסים בהדרגה; בחיפוש ובסינון הם מופיעים מיד
+productsContainer.classList.add("first-load");
 applyFilters();
+setTimeout(function () {
+    productsContainer.classList.remove("first-load");
+}, 1200);

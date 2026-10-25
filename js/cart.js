@@ -10,6 +10,8 @@ const cartCountElement = document.getElementById("cart-count");
 const cartSubtotalElement = document.getElementById("cart-subtotal");
 const cartShippingElement = document.getElementById("cart-shipping");
 const freeShippingNote = document.getElementById("free-shipping-note");
+const giftWrapCheckbox = document.getElementById("gift-wrap");
+const giftMessageInput = document.getElementById("gift-message");
 const clearCartButton = document.getElementById("clear-cart");
 const checkoutLink = document.getElementById("checkout-link");
 
@@ -85,6 +87,7 @@ function renderCart() {
     if (shownItems === 0) {
         cartItemsContainer.innerHTML = `
             <div class="empty-state cart-empty">
+                <img class="empty-illustration" src="images/empty-bag.svg" alt="">
                 <h3>${t("empty_cart_title")}</h3>
                 <p>${t("empty_cart_text")}</p>
                 <a href="shop.html" class="btn btn-dark">${t("all_jewelry")}</a>
@@ -95,7 +98,13 @@ function renderCart() {
     const shipping = getShippingPrice(total);
     cartSubtotalElement.textContent = formatPrice(total);
     cartShippingElement.textContent = shipping === 0 ? t("free") : formatPrice(shipping);
-    cartTotalElement.textContent = formatPrice(total + shipping);
+    // אריזת מתנה (לא נספרת לסף של המשלוח החינם)
+    const gift = shownItems === 0 ? 0 : getGiftPrice();
+    document.getElementById("gift-row").classList.toggle("d-none", gift === 0);
+    document.getElementById("cart-gift").textContent = formatPrice(gift);
+    document.getElementById("gift-box").classList.toggle("d-none", shownItems === 0);
+
+    cartTotalElement.textContent = formatPrice(total + shipping + gift);
     cartCountElement.textContent = itemsCount;
 
     // כמה חסר למשלוח חינם
@@ -200,6 +209,27 @@ cartItemsContainer.addEventListener("click", function (event) {
     } else if (action === "remove") {
         removeItem(id);
     }
+});
+
+
+// ---------- אריזת מתנה ----------
+
+document.getElementById("gift-wrap-price").textContent = "(+" + formatPrice(GIFT_WRAP_PRICE) + ")";
+
+// מציגים את מה שנשמר
+const savedGift = getGiftOptions();
+giftWrapCheckbox.checked = savedGift.wrap;
+giftMessageInput.value = savedGift.message;
+giftMessageInput.classList.toggle("d-none", !savedGift.wrap);
+
+giftWrapCheckbox.addEventListener("change", function () {
+    giftMessageInput.classList.toggle("d-none", !giftWrapCheckbox.checked);
+    saveGiftOptions({ wrap: giftWrapCheckbox.checked, message: giftMessageInput.value });
+    renderCart();
+});
+
+giftMessageInput.addEventListener("input", function () {
+    saveGiftOptions({ wrap: giftWrapCheckbox.checked, message: giftMessageInput.value });
 });
 
 

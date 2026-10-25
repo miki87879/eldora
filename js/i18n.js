@@ -38,6 +38,8 @@ const TEXTS = {
         free: "חינם",
         shipping: "משלוח",
         subtotal: "סכום ביניים",
+        gift_wrap: "אריזת מתנה",
+        gift_message_placeholder: "ברכה לכרטיס (לא חובה)",
         free_shipping_left: "עוד {price} ותקבלו משלוח חינם",
         free_shipping_reached: "ההזמנה הזו זכאית למשלוח חינם",
         total: "סה\"כ",
@@ -98,6 +100,9 @@ const TEXTS = {
         toast_not_found: "המוצר לא נמצא",
         toast_stock_full: "יש במלאי רק {n} יחידות, וכולן כבר בסל.",
         open_details: "פרטים על {name}",
+        badge_new: "חדש",
+        badge_bestseller: "רב מכר",
+        badge_sale: "מבצע",
         all_in_cart: "כל היחידות שבמלאי כבר נמצאות בסל שלך.",
 
         // עמוד הסל
@@ -205,6 +210,8 @@ const TEXTS = {
         free: "Free",
         shipping: "Shipping",
         subtotal: "Subtotal",
+        gift_wrap: "Gift wrapping",
+        gift_message_placeholder: "Card message (optional)",
         free_shipping_left: "Add {price} more for free shipping",
         free_shipping_reached: "This order ships for free",
         total: "Total",
@@ -265,6 +272,9 @@ const TEXTS = {
         toast_not_found: "Product not found",
         toast_stock_full: "Only {n} in stock, and they're all in your bag.",
         open_details: "Details for {name}",
+        badge_new: "New",
+        badge_bestseller: "Bestseller",
+        badge_sale: "Sale",
         all_in_cart: "All units in stock are already in your bag.",
 
         // Cart page

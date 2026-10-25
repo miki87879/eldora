@@ -108,10 +108,20 @@ function displayOrder() {
     const shipping = getShippingPrice(total);
     subtotalPriceElement.textContent = formatPrice(total);
     shippingPriceElement.textContent = shipping === 0 ? t("free") : formatPrice(shipping);
-    totalPriceElement.textContent = formatPrice(total + shipping);
 
-    // מחזירים את הסכום לתשלום, כולל משלוח
-    return total + shipping;
+    // אריזת מתנה, אם נבחרה בסל
+    const giftOptions = getGiftOptions();
+    const gift = getGiftPrice();
+    document.getElementById("giftRow").classList.toggle("d-none", gift === 0);
+    document.getElementById("giftPrice").textContent = formatPrice(gift);
+    const giftNote = document.getElementById("giftNote");
+    giftNote.textContent = giftOptions.wrap && giftOptions.message ? "“" + giftOptions.message + "”" : "";
+    giftNote.classList.toggle("d-none", giftNote.textContent === "");
+
+    totalPriceElement.textContent = formatPrice(total + shipping + gift);
+
+    // מחזירים את הסכום לתשלום, כולל משלוח ואריזה
+    return total + shipping + gift;
 }
 
 
@@ -268,8 +278,9 @@ checkoutForm.addEventListener("submit", function (event) {
             reduceStock(item.product.id, item.quantity);
         });
 
-        // מרוקנים את העגלה
+        // מרוקנים את העגלה ואת בחירת אריזת המתנה
         localStorage.removeItem(getUserKey("cart"));
+        localStorage.removeItem(getUserKey("gift"));
         updateCartBadge();
 
         setButtonLoading(payButton, false);
@@ -304,10 +315,17 @@ function saveOrder(orderNumber, items, total) {
         });
     });
 
+    let itemsTotal = 0;
+    orderItems.forEach(function (item) {
+        itemsTotal += item.price * item.quantity;
+    });
+
     orders.push({
         number: orderNumber,
         date: new Date().toISOString(),
         items: orderItems,
+        shipping: getShippingPrice(itemsTotal),
+        giftWrap: getGiftPrice(),
         total: total
     });
 

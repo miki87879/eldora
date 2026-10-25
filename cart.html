@@ -58,6 +58,23 @@
                     </div>
                     <p id="free-shipping-note" class="shipping-note"></p>
 
+                    <!-- אריזת מתנה -->
+                    <div class="gift-box" id="gift-box">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gift-wrap">
+                            <label class="form-check-label" for="gift-wrap">
+                                <span data-i18n="gift_wrap">אריזת מתנה</span>
+                                <span class="text-muted-soft" id="gift-wrap-price"></span>
+                            </label>
+                        </div>
+                        <textarea id="gift-message" class="form-control mt-2 d-none" rows="2" maxlength="120"
+                                  placeholder="ברכה לכרטיס (לא חובה)" data-i18n-placeholder="gift_message_placeholder"></textarea>
+                    </div>
+                    <div class="summary-row d-none" id="gift-row">
+                        <span data-i18n="gift_wrap">אריזת מתנה</span>
+                        <span id="cart-gift">0 ₪</span>
+                    </div>
+
                     <div class="summary-total">
                         <span data-i18n="total">סה"כ</span>
                         <strong id="cart-total">0 ₪</strong>

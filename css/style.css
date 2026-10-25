@@ -379,6 +379,54 @@ a {
   object-fit: cover;
 }
 
+/* אריחי קטגוריות */
+.category-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.75rem;
+}
+
+.category-tile {
+  position: relative;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 120ms var(--ease-out);
+}
+
+.category-tile:active {
+  transform: scale(.98);
+}
+
+.category-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms var(--ease-out);
+}
+
+.category-tile-name {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: .7rem 1rem;
+  background: rgba(251, 250, 247, .92);
+  color: #141414;
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .category-tile:hover img {
+    transform: scale(1.04);
+  }
+}
+
 /* ---------- 6. סינון, חיפוש ומיון ---------- */
 .category-tabs {
   display: flex;
@@ -524,6 +572,39 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.product-img {
+  position: relative;
+}
+
+/* תווית חדש / רב מכר / מבצע */
+.product-badge {
+  position: absolute;
+  top: .75rem;
+  inset-inline-start: .75rem;
+  padding: .2rem .55rem;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: #141414;
+  background: #fff;
+  border: 1px solid #e4e0d9;
+}
+
+.product-badge.static {
+  position: static;
+}
+
+.product-badge.badge-sale {
+  color: #fff;
+  background: #7a5c3e;
+  border-color: #7a5c3e;
+}
+
+.product-old-price {
+  font-size: .85rem;
+  color: var(--muted);
 }
 
 .product-meta {
@@ -809,6 +890,35 @@ a {
   color: var(--accent);
 }
 
+/* אריזת מתנה */
+.gift-box {
+  margin: .9rem 0 .25rem;
+  padding: .8rem .9rem;
+  border: 1px dashed #d9d3c9;
+  background: var(--surface);
+}
+
+.gift-box .form-check-input {
+  border-color: var(--muted);
+  border-radius: 0;
+}
+
+.gift-box .form-check-input:checked {
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+
+.gift-note {
+  margin: .25rem 0 0;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+[data-bs-theme="dark"] .gift-box {
+  border-color: #3a3733;
+}
+
 .shipping-note:empty {
   display: none;
 }
@@ -916,6 +1026,13 @@ a {
   text-align: center;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+
+.empty-illustration {
+  display: block;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 1rem;
 }
 
 .empty-state h3 {
@@ -1062,6 +1179,40 @@ a {
   opacity: .85;
 }
 
+/* ---------- תנועה עדינה ---------- */
+
+/* כרטיסי המוצרים נכנסים בהדרגה, רק בטעינה הראשונה של החנות */
+.first-load > .col {
+  animation: cardIn 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* חלונות: מופיעים בהגדלה קטנה במקום לרדת מלמעלה */
+.modal.fade .modal-dialog {
+  transform: scale(.97);
+  transition: transform 200ms var(--ease-out);
+}
+
+.modal.show .modal-dialog {
+  transform: none;
+}
+
+/* הודעות: עולות קצת מלמטה */
+.toast {
+  transition: opacity 150ms ease, transform 200ms var(--ease-out);
+}
+
+.toast.showing {
+  transform: translateY(8px);
+}
+
 /* ---------- 15. נגישות ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1086,6 +1237,12 @@ a {
   .shop-intro {
     grid-template-columns: 1fr;
     padding: 1.5rem 0 2rem;
+  }
+
+  .category-tiles {
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem;
+    margin-bottom: 2rem;
   }
 
   .shop-intro-img,

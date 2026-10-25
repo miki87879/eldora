@@ -34,6 +34,7 @@
 
         <!-- מוצג כשהסל ריק -->
         <div id="emptyCheckout" class="empty-state d-none">
+            <img class="empty-illustration" src="images/empty-bag.svg" alt="">
             <h3 data-i18n="empty_checkout_title">אין מוצרים לתשלום</h3>
             <p data-i18n="empty_checkout_text">הסל ריק.</p>
             <a href="shop.html" class="btn btn-dark" data-i18n="all_jewelry">לכל התכשיטים</a>
@@ -155,6 +156,11 @@
                             <span data-i18n="shipping">משלוח</span>
                             <span id="shippingPrice">0 ₪</span>
                         </div>
+                        <div class="summary-row d-none" id="giftRow">
+                            <span data-i18n="gift_wrap">אריזת מתנה</span>
+                            <span id="giftPrice">0 ₪</span>
+                        </div>
+                        <p class="gift-note d-none" id="giftNote"></p>
 
                         <div class="summary-total">
                             <span data-i18n="total">סה"כ</span>

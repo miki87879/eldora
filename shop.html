@@ -40,8 +40,28 @@
             </div>
         </section>
 
+        <!-- אריחי קטגוריות: לחיצה מסננת את המוצרים -->
+        <section class="category-tiles" aria-label="קטגוריות" data-i18n-aria="filter_aria">
+            <button type="button" class="category-tile" data-category="Rings">
+                <img src="images/rose-gold-ring.jpg" alt="" loading="lazy">
+                <span class="category-tile-name" data-i18n="cat_Rings">טבעות</span>
+            </button>
+            <button type="button" class="category-tile" data-category="Necklaces">
+                <img src="images/pearl-necklace.jpg" alt="" loading="lazy">
+                <span class="category-tile-name" data-i18n="cat_Necklaces">שרשראות</span>
+            </button>
+            <button type="button" class="category-tile" data-category="Bracelets">
+                <img src="images/gold-chain-bracelet.jpg" alt="" loading="lazy">
+                <span class="category-tile-name" data-i18n="cat_Bracelets">צמידים</span>
+            </button>
+            <button type="button" class="category-tile" data-category="Earrings">
+                <img src="images/golden-hoops.jpg" alt="" loading="lazy">
+                <span class="category-tile-name" data-i18n="cat_Earrings">עגילים</span>
+            </button>
+        </section>
+
         <!-- קטגוריות, חיפוש ומיון -->
-        <div class="toolbar">
+        <div class="toolbar" id="toolbar">
             <div id="category-filter" class="category-tabs" role="group" aria-label="סינון לפי קטגוריה" data-i18n-aria="filter_aria">
                 <button class="category-tab active" data-category="all" data-i18n="cat_all">הכל</button>
                 <button class="category-tab" data-category="Rings" data-i18n="cat_Rings">טבעות</button>
@@ -76,6 +96,7 @@
 
         <!-- מוצג כשהחיפוש לא מצא כלום -->
         <div id="no-results" class="empty-state d-none">
+            <img class="empty-illustration" src="images/empty-box.svg" alt="">
             <h3 data-i18n="no_results_title">לא מצאנו תכשיטים שמתאימים לחיפוש</h3>
             <p data-i18n="no_results_text">נסו מילה אחרת או בחרו קטגוריה אחרת</p>
             <button type="button" id="reset-filters" class="btn btn-dark" data-i18n="show_all">הצגת כל התכשיטים</button>
